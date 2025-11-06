@@ -801,10 +801,10 @@ const getUniqueOffsets = () => {
 };
 
 const handleKeyup = (e) => {
-  // Allow ctrl through for scrolling
-  if (e.keyCode !== 17) {
-    e.preventDefault();
-  }
+  // // Allow ctrl through for scrolling
+  // if (e.keyCode !== 17) {
+  //   e.preventDefault();
+  // }
 
   let letter;
   if (e.keyCode >= 65 && e.keyCode <= 90) {
@@ -818,11 +818,11 @@ const handleKeyup = (e) => {
 };
 
 const handleKeydown = (e) => {
-  // Allow ctrl through for scrolling
-  if (e.keyCode !== 17) {
-    e.preventDefault();
-  }
-  return false;
+  // // Allow ctrl through for scrolling
+  // if (e.keyCode !== 17) {
+  //   e.preventDefault();
+  // }
+  // return false;
 }
 
 const bind = () => {
