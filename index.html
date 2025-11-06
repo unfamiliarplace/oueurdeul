@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Oueurdeul</title>
+  <link rel='stylesheet' href='https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css'>
+<link rel='stylesheet' href='https://t.sawczak.com/common/assets/fonts/pm/pm64-redux.css'>
+  <link rel="stylesheet" href="./style.css">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
+
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id='app'>
+  <div id='mainPanel'>
+    <div id='gamePanel' class='fullPanel'>
+      <div id='titlePanel'>
+        <h1 id='title' class='flexRow'>
+          <div class='cell endCell' id='titleCell-0'></div>
+          <div class='cell endCell' id='titleCell-1'></div>
+          <div class='cell endCell' id='titleCell-2'></div>
+          <div class='cell endCell' id='titleCell-3'></div>
+          <div class='cell endCell' id='titleCell-4'></div>
+          <div class='cell endCell' id='titleCell-5'></div>
+          <div class='cell endCell' id='titleCell-6'></div>
+          <div class='cell endCell' id='titleCell-7'></div>
+          <div class='cell endCell' id='titleCell-8'></div>
+        </h1>
+      </div>
+      <div id='focusPanel' class='flexRow'></div>
+    </div>
+    <div id="helpPanel" class="hide fullPanel verticalPanel overlayPanel">
+      <div id="helpContent" class="panelContent">
+        <h1>À propos</h1>
+        <hr />
+        <p>Cette application est une copie du jeu célèbre <a href='https://www.nytimes.com/games/wordle/index.html'><em>Wordle</em></a>, mais plus précisément de la version française <a href='https://wordle.louan.me/' title='Le Mot'><em>Le Mot</em></a> par <a href='https://twitter.com/louanben' title='@louanben sur Twitter'>@louanben</a>.</p>
+        <p>Je l'ai créée afin de pouvoir empêcher aux élèves de pré-regarder le mot et donner des « spoilers » aux autres :) Mais à part ça, cela me permet aussi d'ajouter des fonctionnalités telles le choix de la longueur des mots et le nombre d'essais. À l'avenir j'espère ajouter une fonction pour prendre en compte les diacritiques.</p>
+        <p>En activant la fonction « Sélection journalière de mots unique à moi », un <a href='https://fr.wikipedia.org/wiki/Cookie_(informatique)' title='Cookie sur Wikipedia'>cookie</a> comportant des chiffres aléatoires sera sauvé dans ton navigateur. Ces chiffres détermineront où tu commences dans la séquence de mots. L'activation de cette fonction est indiquée par un astérisque après la date. Quand cette fonction est désactivée, le même mot sera choisi que pour tout le monde.</p>
+        <p>Noter que la déactivation de cette fonction ne change pas la sélection aléatoire qui a été déterminée. Pour réinitialiser ceci, il faut effacer le cookie.</p>
+      </div>
+    </div>
+    <div id="settingsPanel" class="hide fullPanel verticalPanel overlayPanel">
+      <div id="settingsContent" class="panelContent">
+        <h1>Paramètres</h1>
+        <hr />
+        <div id='settingsNotice' class='flexRow'>Tout changement de paramètre entraîne la réinitialisation du jeu.</div>
+        <div id='settingsGrid' class='flexRow'>
+          <div id='mainSettings' class='flexCol'>
+            <div id='settingNLetters' class='settingCard flexRow'>
+              <label for='nLetters' class='tooltip' title='Nombre de lettres dans un mot'><div class='settingLabel'>Nombre de lettres</div>
+                <input id='nLetters' class='spinner tooltip' title='Nombre de lettres dans un mot' />
+              </label>
+            </div>
+            <div id='settingNGuesses' class='settingCard flexRow'>
+              <label for='nGuesses' class='tooltip' title='Nombre de essais avant de finir'><div class='settingLabel'>Nombre d'essais</div>
+                <input id='nGuesses' class='spinner tooltip' title='Nombre de essais avant de finir' />
+              </label>
+            </div>
+            <div id='settingUseCustomList' class='settingCard flexRow'>
+              <label for='useCustomList'>
+              <input type='checkbox' id='useCustomList' />
+              <span class='checkmark'></span>
+              Sélection journalière de mots unique pour moi ?</label>
+              <button id='btnClearCustomList' title='Effacer le cookie pour la sélection unique. Noter que la sélection sera de nouveau aléatoire si réactivée.' class='buttonBase buttonEffects' disabled="">Effacer ce cookie</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id='footer'>
+    <div id='footerContent'>
+      <div class='footerBlock' id='footerLeft'>
+        <div id='resetButtonContainer'>
+          <button id='btnReset' class='buttonBase buttonEffects buttonFooter' title="Réinitialiser le jeu">Réinitialiser</button>
+        </div>
+        <div id='helpButtonContainer'>
+          <button id='btnHelp' class='buttonBase buttonEffects buttonFooter' title="Montrer / cacher le panneau « À propos »">À propos</button>
+        </div>
+
+        <div id='settingsButtonContainer'>
+          <button id='btnSettings' class='buttonBase buttonEffects buttonFooter' title="Montrer / cacher le panneau des paramètres">Paramètres</button>
+        </div>
+      </div>
+      <div class='footerBlock' id='footerRight'>
+        <div id="copyrightContainer">
+          <div id="copyright">© 2025 <a href="https://sawczak.com" title="sawczak.com">Luke Sawczak</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js'></script>
+<script src='https://g.sawczak.com/web-tools/js/toolbox.js'></script>
+<script src='https://g.sawczak.com/web-tools/js/jquery-ui-options.js'></script>
+<script src='https://t.sawczak.com/common/data/word-lists/fr/js/1_7_alpha.js'></script>
+
+<script  src="./script.js"></script>
+
+</body>
+</html>
