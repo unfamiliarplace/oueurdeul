@@ -41,8 +41,8 @@
         <hr />
         <p>Cette application est une copie du jeu célèbre <a href='https://www.nytimes.com/games/wordle/index.html'><em>Wordle</em></a>, mais plus précisément de la version française <a href='https://wordle.louan.me/' title='Le Mot'><em>Le Mot</em></a> par <a href='https://twitter.com/louanben' title='@louanben sur Twitter'>@louanben</a>.</p>
         <p>Je l'ai créée afin de pouvoir empêcher aux élèves de pré-regarder le mot et donner des « spoilers » aux autres :) Mais à part ça, cela me permet aussi d'ajouter des fonctionnalités telles le choix de la longueur des mots et le nombre d'essais. À l'avenir j'espère ajouter une fonction pour prendre en compte les diacritiques.</p>
-        <p>En activant la fonction « Sélection journalière de mots unique à moi », un <a href='https://fr.wikipedia.org/wiki/Cookie_(informatique)' title='Cookie sur Wikipedia'>cookie</a> comportant des chiffres aléatoires sera sauvé dans ton navigateur. Ces chiffres détermineront où tu commences dans la séquence de mots. L'activation de cette fonction est indiquée par un astérisque après la date. Quand cette fonction est désactivée, le même mot sera choisi que pour tout le monde.</p>
-        <p>Noter que la déactivation de cette fonction ne change pas la sélection aléatoire qui a été déterminée. Pour réinitialiser ceci, il faut effacer le cookie.</p>
+        <p>En activant la fonction « Sélection journalière de mots unique à moi », un jeton comportant des chiffres aléatoires sera sauvé dans ton navigateur. Ces chiffres détermineront où tu commences dans la séquence de mots. L'activation de cette fonction est indiquée par un astérisque après la date. Quand cette fonction est désactivée, le même mot sera choisi que pour tout le monde.</p>
+        <p>Noter que la déactivation de cette fonction ne change pas la sélection aléatoire qui a été déterminée. C'est-à-dire que vous pouvez activer ou désactiver cette fonctionnalité sans perdre votre place dans la liste. Il y a un bouton qui permet de réinitialiser le jeton aléatoire.</p>
       </div>
     </div>
     <div id="settingsPanel" class="hide fullPanel verticalPanel overlayPanel">
@@ -67,7 +67,7 @@
               <input type='checkbox' id='useCustomList' />
               <span class='checkmark'></span>
               Sélection journalière de mots unique pour moi ?</label>
-              <button id='btnClearCustomList' title='Effacer le cookie pour la sélection unique. Noter que la sélection sera de nouveau aléatoire si réactivée.' class='buttonBase buttonEffects' disabled="">Effacer ce cookie</button>
+              <button id='btnClearCustomList' title='Réinitialiser le jeton pour la sélection unique.' class='buttonBase buttonEffects' disabled="">Réinitialiser ce jeton</button>
             </div>
           </div>
         </div>
