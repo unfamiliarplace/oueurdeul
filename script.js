@@ -792,7 +792,7 @@ const getUniqueOffsets = () => {
   if (localStorage.getItem(LS_uniqueOffsets) === null) {
     let uo = {};
     for (let len = 1; len < 8; len++) {
-      uo[len] = Random.choice(fr_1_7_alpha[len].length - 1);
+      uo[len] = Random.integer(fr_1_7_alpha[len].length - 1);
     }
     localStorage.setItem(LS_uniqueOffsets, JSON.stringify(uo));
   }
