@@ -297,7 +297,8 @@ input[disabled=""] {
 }
 
 .cellWrong {
-  background: rgba(50, 50, 70, 0.4);
+  background: rgba(50, 50, 70, 0.35);
+  color: rgba(255, 255, 255, 0.875);
 }
 
 .cellCurrent {

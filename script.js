@@ -22,6 +22,14 @@ class Keyboard {
 
   static AZERTY = ["azertyuiop", "qsdfghjklm", "1wxcvbn2"];
   static QWERTY = ["qwertyuiop", "asdfghjkl", "1zxcvbnm2"];
+
+  static getLetters = (kb) => {
+    let letters = "";
+    for (let row of kb) {
+      letters += row;
+    }
+    return letters;
+  }
 }
 
 class GameState {
@@ -37,10 +45,25 @@ class AnimationState {
   static BUSY = 1;
 }
 
+class LetterState {
+  static UNKNOWN = 0;
+  static WRONG = 1;
+  static MISPLACED = 2;
+  static RIGHT = 3;
+}
+
+const letterStateToClass = {
+  [LetterState.UNKNOWN]: "",
+  [LetterState.WRONG]: "cellWrong",
+  [LetterState.MISPLACED]: "cellMisplaced",
+  [LetterState.RIGHT]: "cellRight",
+};
+
 class App {
   words;
   currentGuess;
   guesses;
+  letterStates;
   word;
   gameState;
   animationState;
@@ -55,6 +78,10 @@ class App {
   resetGameValues = () => {
     this.currentGuess = "";
     this.guesses = [];
+    this.letterStates = {};
+    for (let letter of Keyboard.getLetters(Keyboard.AZERTY)) {
+      this.letterStates[letter] = LetterState.UNKNOWN;
+    }
     this.word = "";
   };
 
@@ -264,7 +291,7 @@ class App {
 
   updateGuessRow = () => {
     let i_row = this.guesses.length - 1;
-    let classes = this.getLatestGuessClasses();
+    let states = this.getLatestGuessStates();
 
     app.animationState = AnimationState.BUSY;
     app.gameState = GameState.PAUSED;
@@ -279,10 +306,15 @@ class App {
         cell.addClass("cellFlip");
 
         setTimeout(function () {
-          cell.addClass(classes[i_col]);
+          cell.addClass(letterStateToClass[states[i_col]]);
 
-          clearAlphabetCellClasses(letter);
-          abCell.addClass(classes[i_col]);
+          // Get new alphabet cell class -- should be the "best yet"
+          if (app.letterStates[letter] < states[i_col]) {
+            app.letterStates[letter] = states[i_col];
+            clearAlphabetCellClasses(letter);
+            abCell.addClass(letterStateToClass[app.letterStates[letter]]);
+          }
+
         }, 0);
       }, i_col * FLIP_DELAY + FLIP_OFFSET);
     }
@@ -323,23 +355,23 @@ class App {
     this.word = this.words[i];
   };
 
-  getLatestGuessClasses = () => {
+  getLatestGuessStates = () => {
     let nLetters = options.nLetters.value();
     let matchable = this.word.split("");
     let guess = this.guesses.at(-1);
 
-    let classes = [];
+    let states = [];
     let nonrights = [];
 
     // First pass has to be the right ones
     for (let i = 0; i < nLetters; i++) {
       if (guess[i] === this.word[i]) {
-        classes.push("cellRight");
+        states.push(LetterState.RIGHT);
         removeItem(matchable, guess[i]);
 
         // Keep track of ones not yet checked
       } else {
-        classes.push("--");
+        states.push(LetterState.UNKNOWN);
         nonrights.push(i);
       }
     }
@@ -347,35 +379,14 @@ class App {
     // Only then can leftovers be given to misplaced
     for (let i of nonrights) {
       if (matchable.includes(guess[i])) {
-        classes[i] = "cellMisplaced";
+        states[i] = LetterState.MISPLACED;
         removeItem(matchable, guess[i]);
       } else {
-        classes[i] = "cellWrong";
+        states[i] = LetterState.WRONG;
       }
     }
 
-    return classes;
-  };
-
-  getLatestGuessClassesOld = () => {
-    let nLetters = options.nLetters.value();
-    let matchable = this.word.split("");
-    let guess = this.guesses.at(-1);
-
-    let classes = [];
-    for (let i = 0; i < nLetters; i++) {
-      if (guess[i] === this.word[i]) {
-        classes.push("cellRight");
-        removeItem(matchable, guess[i]);
-      } else if (matchable.includes(guess[i])) {
-        classes.push("cellMisplaced");
-        removeItem(matchable, guess[i]);
-      } else {
-        classes.push("cellWrong");
-      }
-    }
-
-    return classes;
+    return states;
   };
 
   getText = (i_row, i_col) => {
