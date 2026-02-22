@@ -16,6 +16,11 @@ const TITLE = "Oueurdeul";
 const FLIP_OFFSET = 75;
 const FLIP_DELAY = 325;
 
+const RESERVED_KEYCODES = [13, 8];
+for (let i = 65; i < 91; i++) {
+  RESERVED_KEYCODES.push(i);
+}
+
 class Keyboard {
   static BACKSPACE = "1";
   static ENTER = "2";
@@ -475,11 +480,15 @@ class Options {
 }
 
 const addScenes = () => {
-  stage.createScene("game", "#gamePanel", "");
+  stage.createScene("game", "#gamePanel", "", unfocusButtons);
   stage.createScene("help", "#helpPanel", "#btnHelp");
   stage.createScene("settings", "#settingsPanel", "#btnSettings");
   stage.setDefault("game");
 };
+
+const unfocusButtons = () => {
+  $('button').blur();
+}
 
 const disableAlphabetCell = (symbol) => {
   let cell = $(`#abCell-${symbol}`);
@@ -818,14 +827,18 @@ const handleKeyup = (e) => {
   // }
 
   let letter;
-  if (e.keyCode >= 65 && e.keyCode <= 90) {
-    letter = String.fromCharCode(e.keyCode).toLowerCase();
-    $(`#abCell-${letter}`).click();
-  } else if (e.keyCode === 13) {
-    $(`#abCell-${Keyboard.ENTER}`).click();
-  } else if (e.keyCode === 8) {
-    $(`#abCell-${Keyboard.BACKSPACE}`).click();
-  }
+    if (RESERVED_KEYCODES.includes(e.keyCode)) {
+      if (stage.showing("game")) {
+        if (e.keyCode >= 65 && e.keyCode <= 90) {
+          letter = String.fromCharCode(e.keyCode).toLowerCase();
+          $(`#abCell-${letter}`).click();
+        } else if (e.keyCode === 13) {
+          $(`#abCell-${Keyboard.ENTER}`).click();
+        } else if (e.keyCode === 8) {
+          $(`#abCell-${Keyboard.BACKSPACE}`).click();
+        }
+      }
+    }
 };
 
 const handleKeydown = (e) => {
